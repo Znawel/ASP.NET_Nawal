@@ -1,0 +1,23 @@
+@model List<WebApplication4.Models.Book>
+
+<h2>Liste des livres</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Année</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var livre in Model)
+    {
+        <tr>
+            <td>@livre.Title</td>
+            <td>@livre.Author</td>
+            <td>@livre.Year</td>
+        </tr>
+    }
+    </tbody>
+</table>

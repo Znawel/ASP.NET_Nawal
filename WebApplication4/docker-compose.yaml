@@ -1,0 +1,13 @@
+services:
+  serverSQL:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlservereba
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Test1234!
+    ports:
+      - "1434:1433"
+    volumes:
+      - sqlDB_data:/var/opt/mssql
+volumes:
+  sqlDB_data:

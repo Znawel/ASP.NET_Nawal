@@ -1,39 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApplication4.Data;
 using WebApplication4.Models;
 
 namespace WebApplication4.Controllers
-{
+{ 
     public class BookController : Controller
     {
+        private readonly AppDbContext _Context;
+        public BookController(AppDbContext context)
+        {
+            _Context = context;
+        }
         public IActionResult Index()
         {
-            var listeDesLivres = new List<Book>
-            {
-                new Book { Id = 1, Title = "L'Éducation sentimentale", Author = "Gustave Flaubert", Year = 1869 },
-                new Book { Id = 2, Title = "Une chambre à soi", Author = "Virginia Woolf", Year = 1929 },
-                new Book { Id = 3, Title = "Lolita", Author = "Vladimir Nabokov", Year = 1955 }
-            };
-
-            return View(listeDesLivres);
+            var books = _Context.Books.ToList();
+            return View(books);
         }
-        public IActionResult Details(int id)
+        public IActionResult Create()
         {
-            var listeDesLivres = new List<Book>
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Book book)
+        {
+            if (ModelState.IsValid)
             {
-                new Book { Id = 1, Title = "L'Éducation sentimentale", Author = "Gustave Flaubert", Year = 1869 },
-                new Book { Id = 2, Title = "Une chambre à soi", Author = "Virginia Woolf", Year = 1929 },
-                new Book { Id = 3, Title = "Lolita", Author = "Vladimir Nabokov", Year = 1955 }
-            };
-            
-            var livre = listeDesLivres.FirstOrDefault(b => b.Id == id);
+                _Context.Books.Add(book);
+                _Context.SaveChanges();
 
-            if (livre == null)
-            {
-                return NotFound(); 
+                return RedirectToAction("Index");
             }
 
-            return View(livre); 
+            return View(book);
         }
-
     }
-}
+} 

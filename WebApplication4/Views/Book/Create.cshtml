@@ -1,0 +1,17 @@
+@model WebApplication4.Models.Book
+
+<h1>Ajout de livre</h1>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title"/>
+    </div>
+    <div>
+        <label asp-for="Author"></label>
+        <input asp-for="Title"/>
+    </div>
+    <button type="submit">Enregistrer</button>
+</form>
+
+<a href="/book">Retour à ma liste de livres</a>
